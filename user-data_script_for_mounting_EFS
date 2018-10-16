@@ -1,0 +1,12 @@
+#!/bin/bash
+# more examples available at https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+apt-get update
+apt-get install -y nfs-common git
+mkdir -p /data
+chown ubuntu:ubuntu /data
+echo "ADD_YOUR_EFS_DNS_ENTRY_HERE:/ /data nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 0 0" >> /etc/fstab
+mount -a -t nfs4
+sleep 30
+git clone https://github.com/gmihaiescu/efs-based-workflow.git
+cd efs-based-workflow && chmod 755 script.sh
+bash script.sh
